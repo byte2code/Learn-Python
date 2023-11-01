@@ -1,4 +1,6 @@
+
 const displayArea = document.getElementById("display-area");
+const displayData = document.getElementById("display-data");
 const randomInput = document.getElementById("input_random");
 
 const maxValue = 200;
@@ -10,6 +12,10 @@ function generateRandomArray(length, min = 0, max = 0){
         arr.push(Math.ceil(Math.random() * (max || maxValue)) + (minValue || min))
     }
     return arr;
+}
+
+function createElement(element){
+    return document.createElement(`${element}`)
 }
 
 function generateLabel(val){
@@ -54,45 +60,12 @@ function displayBlocks(array){
     displayArea.style.marginRight = "auto"
 }
 
-function swapBlocksPos(elem1, elem2){
-    return new Promise((resolve) => {
-        let temp = elem1.style.transform;
-        elem1.style.transform = elem2.style.transform
-        elem2.style.transform = temp;
-
-        window.requestAnimationFrame(function() {
-            setTimeout(() => {
-                displayArea.insertBefore(elem2, elem1);
-                resolve()
-            }, 500)
-        })
-    })
+async function nextAction(){
+    const dt = InsertionSort()
+    dt.next();
 }
 
-async function BubbleSort(){
-    let blocks = document.querySelectorAll(".block-container")
 
-    for(let i = 0; i < blocks.length - 1; i++){
-        for(let j = 0; j < blocks.length - i - 1; j++){
-            blocks[j].childNodes[1].style.backgroundColor = "green";
-            blocks[j+1].childNodes[1].style.backgroundColor = "green";
 
-            await new Promise((resolve) => {
-                setTimeout(() => resolve(), 3e2);
-            })
 
-            let firstVal = Number(blocks[j].childNodes[0].innerHTML);
-            let secondVal = Number(blocks[j+1].childNodes[0].innerHTML);
-
-            if(firstVal > secondVal){
-                await swapBlocksPos(blocks[j], blocks[j+1]);
-                blocks = document.querySelectorAll(".block-container")
-            }
-            blocks[j].childNodes[1].style.backgroundColor = "blue"
-            blocks[j+1].childNodes[1].style.backgroundColor = "blue"
-        }
-        blocks[blocks.length - i - 1].childNodes[1].style.backgroundColor = "purple";
-    }
-}
-
-window.addEventListener("DOMContentLoaded", displayBlocks(generateRandomArray(Number(randomInput.value))));
+window.addEventListener("DOMContentLoaded", displayBlocks(generateRandomArray(10)));

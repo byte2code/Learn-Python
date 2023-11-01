@@ -1,4 +1,10 @@
-
+.main-container{
+    display: grid; 
+    grid-template-columns: minmax(600px, 1fr) 1fr; 
+    gap: 10px 10px; 
+    grid-template-areas: 
+        "displayArea details";
+}
 #display-area{
     position: relative;
     height: 300px;
